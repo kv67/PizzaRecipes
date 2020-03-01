@@ -55,7 +55,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesV
 
     public RecipesViewHolder(@NonNull View itemView) {
       super(itemView);
-      imageViewPizza = itemView.findViewById(R.id.imageViewPizza);
+      imageViewPizza = itemView.findViewById(R.id.imageViewDetail);
       textViewHeader = itemView.findViewById(R.id.textViewHeader);
       textViewContent = itemView.findViewById(R.id.textViewContent);
 
