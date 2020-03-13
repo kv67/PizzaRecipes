@@ -6,6 +6,15 @@ public class ConstValues {
     throw new IllegalStateException("ConstValues class");
   }
 
+  public static final String WEB_SITE = "https://www.bbcgoodfood.com";
+  public static final String NEXT_PAGE = "/recipes/collection/pizza?page=%d";
+  public static final String ARTICLE = "article[class*=node node-recipe node-teaser-item clearfix]";
+  public static final String ITEM_TITLE = ".teaser-item__title";
+  public static final String IMAGE_SRC = "img[src*=.jpg]";
+  public static final String ITEM_CONTENT = "div.teaser-item__text-content";
+  public static final String HTTPS = "https:";
+  public static final String METHOD_ITEM = "li[class=method__item]";
+
   public static final String MARGHUERITA_NEXT_LEVEL = "First, make the dough. Tip the flour into "
       + "a bowl and add 300ml tepid water. Mix together and set aside at room temperature for 1 " +
       "hr." + " Dissolve the yeast in 2 tbsp water and mix this and 15g of salt through the dough" +

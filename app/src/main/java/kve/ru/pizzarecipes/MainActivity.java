@@ -7,46 +7,67 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-  List<PizzaRecipe> recipes = new ArrayList<>();
-  RecyclerView recyclerViewMain;
-  RecipesAdapter adapter;
+  private static boolean loading = false;
+  private RecyclerView recyclerViewMain;
+  private RecipesAdapter adapter;
+
+  private static void setLoading(boolean loading) {
+    MainActivity.loading = loading;
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    recipes.add(new PizzaRecipe(R.drawable.marghuerita_next_level,
-        "Next level Margherita pizza",
-        "Forget takeaways – you can’t beat a homemade Margherita pizza topped with fresh tomato" + " sauce and melted cheese. Here's how to master this everyday classic.....", ConstValues.MARGHUERITA_NEXT_LEVEL));
-    recipes.add(new PizzaRecipe(R.drawable.margherita_in_four_steps,
-        "Pizza Margherita in 4 easy steps",
-        "Even a novice cook can master the art of pizza with our simple step-by-step guide. " + "Bellissimo", ConstValues.MARGHERITA_IN_FOUR_STEPS));
-    recipes.add(new PizzaRecipe(R.drawable.superhealthy_pizza,
-        "Superhealthy pizza",
-        "The quantities for this are generous, so if you have any leftovers, pop a wedge of " +
-            "cold pizza into your lunchbox the next day", ConstValues.SUPERHEALTHY_PIZZA));
-
+    NetworkUtils.setOnFinishLoadingListener(new NetworkUtils.OnFinishLoadingListener() {
+      @Override
+      public void onFinishLoading(List<PizzaRecipe> recipes) {
+        loadRecipes(recipes);
+      }
+    });
     recyclerViewMain = findViewById(R.id.recyclerViewMain);
-    recyclerViewMain.setHasFixedSize(true);
-    adapter = new RecipesAdapter(recipes);
+    adapter = new RecipesAdapter();
     recyclerViewMain.setAdapter(adapter);
     recyclerViewMain.setLayoutManager(new LinearLayoutManager(this));
+    adapter.setOnReachEndListener(new RecipesAdapter.OnReachEndListener() {
+      @Override
+      public void onReachEnd() {
+        NetworkUtils.getRecipes();
+      }
+    });
     adapter.setOnRecipeClickListener(new RecipesAdapter.OnRecipeClickListener() {
       @Override
       public void onRecipeClick(int position) {
-        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-        intent.putExtra("imageResource", recipes.get(position).getImageResource());
-        intent.putExtra("header", recipes.get(position).getHeader());
-        intent.putExtra("content", recipes.get(position).getContent());
-        startActivity(intent);
+        String content =
+            NetworkUtils.getCurrentRecipe(adapter.getRecipes().get(position).getHref());
+        if (content != null) {
+          adapter.getRecipes().get(position).setContent(content);
+          Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+          intent.putExtra("imageSrc", adapter.getRecipes().get(position).getImageSrc());
+          intent.putExtra("header", adapter.getRecipes().get(position).getHeader());
+          intent.putExtra("content", adapter.getRecipes().get(position).getContent());
+          startActivity(intent);
+        }
       }
     });
 
+    NetworkUtils.getRecipes();
   }
+
+  private void loadRecipes(List<PizzaRecipe> recipes) {
+    if (!loading) {
+      setLoading(true);
+      adapter.addRecipes(recipes);
+      if (!recyclerViewMain.isComputingLayout()) {
+        adapter.notifyDataSetChanged();
+      }
+      setLoading(false);
+    }
+  }
+
 }
