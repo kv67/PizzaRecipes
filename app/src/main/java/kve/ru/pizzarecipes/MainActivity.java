@@ -47,14 +47,13 @@ public class MainActivity extends AppCompatActivity {
     adapter.setOnRecipeClickListener(new RecipesAdapter.OnRecipeClickListener() {
       @Override
       public void onRecipeClick(int position) {
-        String content =
-            NetworkUtils.getCurrentRecipe(adapter.getRecipes().get(position).getHref());
+        String content = NetworkUtils.getCurrentRecipe(RecipesAdapter.getRecipes().get(position).getHref());
         if (content != null) {
-          adapter.getRecipes().get(position).setContent(content);
+          RecipesAdapter.getRecipes().get(position).setContent(content);
           Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-          intent.putExtra("imageSrc", adapter.getRecipes().get(position).getImageSrc());
-          intent.putExtra("header", adapter.getRecipes().get(position).getHeader());
-          intent.putExtra("content", adapter.getRecipes().get(position).getContent());
+          intent.putExtra("imageSrc", RecipesAdapter.getRecipes().get(position).getImageSrc());
+          intent.putExtra("header", RecipesAdapter.getRecipes().get(position).getHeader());
+          intent.putExtra("content", RecipesAdapter.getRecipes().get(position).getContent());
           startActivity(intent);
         }
       }
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
   private void loadRecipes(List<PizzaRecipe> recipes) {
     if (!loading) {
       setLoading(true);
-      adapter.addRecipes(recipes);
+      RecipesAdapter.addRecipes(recipes);
       if (!recyclerViewMain.isComputingLayout()) {
         adapter.notifyDataSetChanged();
       }

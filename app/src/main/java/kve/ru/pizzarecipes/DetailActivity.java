@@ -17,9 +17,6 @@ public class DetailActivity extends AppCompatActivity {
 
   private RecyclerView recyclerViewIngredients;
   private IngredientsAdapter adapter;
-  private ImageView imageViewDetail;
-  private TextView textViewTitle;
-  private TextView textViewContent;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +28,9 @@ public class DetailActivity extends AppCompatActivity {
     recyclerViewIngredients.setAdapter(adapter);
     recyclerViewIngredients.setLayoutManager(new LinearLayoutManager(this));
 
-    imageViewDetail = findViewById(R.id.imageViewDetail);
-    textViewTitle = findViewById(R.id.textViewTitle);
-    textViewContent = findViewById(R.id.textViewContent);
+    ImageView imageViewDetail = findViewById(R.id.imageViewDetail);
+    TextView textViewTitle = findViewById(R.id.textViewTitle);
+    TextView textViewContent = findViewById(R.id.textViewContent);
 
     Intent intent = getIntent();
     if (intent != null) {

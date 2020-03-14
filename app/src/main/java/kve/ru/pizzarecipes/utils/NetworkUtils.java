@@ -30,14 +30,6 @@ public class NetworkUtils {
     NetworkUtils.onFinishLoadingListener = onFinishLoadingListener;
   }
 
-  private static void setNextPage(int nextPage) {
-    NetworkUtils.nextPage = nextPage;
-  }
-
-  private static void setIsLoading(boolean isLoading) {
-    NetworkUtils.isLoading = isLoading;
-  }
-
   public static String getCurrentRecipe(String href) {
     try {
       return new LoadRecipeTask().execute(href).get();
@@ -88,6 +80,14 @@ public class NetworkUtils {
   }
 
   public static class LoadingTask extends AsyncTask<Void, Void, List<PizzaRecipe>> {
+
+    private static void setNextPage(int nextPage) {
+      NetworkUtils.nextPage = nextPage;
+    }
+
+    private static void setIsLoading(boolean isLoading) {
+      NetworkUtils.isLoading = isLoading;
+    }
 
     @Override
     protected List<PizzaRecipe> doInBackground(Void... voids) {

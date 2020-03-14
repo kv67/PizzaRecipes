@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kve.ru.pizzarecipes.R;
@@ -15,7 +16,7 @@ import kve.ru.pizzarecipes.data.IngredientGroup;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientsViewHolder> {
 
-  private List<IngredientGroup> ingredients;
+  private List<IngredientGroup> ingredients = new ArrayList<>();
 
   @NonNull
   @Override

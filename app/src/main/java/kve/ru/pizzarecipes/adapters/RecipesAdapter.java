@@ -19,23 +19,17 @@ import kve.ru.pizzarecipes.data.PizzaRecipe;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder> {
 
-  private static List<PizzaRecipe> recipes;
+  private static List<PizzaRecipe> recipes = new ArrayList<>();
   private OnRecipeClickListener onRecipeClickListener;
   private OnReachEndListener onReachEndListener;
-
-  public RecipesAdapter() {
-    if (recipes == null) {
-      recipes = new ArrayList<>();
-    }
-  }
 
   public static List<PizzaRecipe> getRecipes() {
     return recipes;
   }
 
-  public void addRecipes(List<PizzaRecipe> recipes) {
+  public static void addRecipes(List<PizzaRecipe> recipes) {
     if (recipes != null && !recipes.isEmpty()) {
-      this.recipes.addAll(recipes);
+      RecipesAdapter.recipes.addAll(recipes);
     }
   }
 
