@@ -9,6 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import kve.ru.pizzarecipes.adapters.RecipesAdapter;
+import kve.ru.pizzarecipes.data.PizzaRecipe;
+import kve.ru.pizzarecipes.utils.NetworkUtils;
+
 public class MainActivity extends AppCompatActivity {
 
   private static boolean loading = false;

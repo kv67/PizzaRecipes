@@ -6,11 +6,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import kve.ru.pizzarecipes.adapters.IngredientsAdapter;
+
 public class DetailActivity extends AppCompatActivity {
 
+  private RecyclerView recyclerViewIngredients;
+  private IngredientsAdapter adapter;
   private ImageView imageViewDetail;
   private TextView textViewTitle;
   private TextView textViewContent;
@@ -19,6 +25,11 @@ public class DetailActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_detail);
+
+    recyclerViewIngredients = findViewById(R.id.recyclerViewIngredients);
+    adapter = new IngredientsAdapter();
+    recyclerViewIngredients.setAdapter(adapter);
+    recyclerViewIngredients.setLayoutManager(new LinearLayoutManager(this));
 
     imageViewDetail = findViewById(R.id.imageViewDetail);
     textViewTitle = findViewById(R.id.textViewTitle);

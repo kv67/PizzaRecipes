@@ -1,4 +1,4 @@
-package kve.ru.pizzarecipes;
+package kve.ru.pizzarecipes.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +13,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import kve.ru.pizzarecipes.R;
+import kve.ru.pizzarecipes.data.PizzaRecipe;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder> {
 

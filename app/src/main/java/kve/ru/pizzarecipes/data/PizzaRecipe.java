@@ -1,4 +1,4 @@
-package kve.ru.pizzarecipes;
+package kve.ru.pizzarecipes.data;
 
 public class PizzaRecipe {
   private int imageResource;
