@@ -18,6 +18,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
   private List<IngredientGroup> ingredients = new ArrayList<>();
 
+  public void setIngredients(List<IngredientGroup> ingredients) {
+    this.ingredients = ingredients;
+    notifyDataSetChanged();
+  }
+
   @NonNull
   @Override
   public IngredientsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

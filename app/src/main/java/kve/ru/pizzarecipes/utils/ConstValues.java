@@ -14,4 +14,8 @@ public class ConstValues {
   public static final String ITEM_CONTENT = "div.teaser-item__text-content";
   public static final String HTTPS = "https:";
   public static final String METHOD_ITEM = "li[class=method__item]";
+  public static final String INGREDIENTS_CONTENT = "div[class=ingredients-list]";
+  public static final String INGREDIENTS_LIST_GROUP = "ul[class=ingredients-list__group]";
+  public static final String INGREDIENTS_GROUP_TITLE = "h3[class=ingredients-list__group-title]";
+  public static final String INGREDIENTS_ITEMS = "li[class=ingredients-list__item]";
 }

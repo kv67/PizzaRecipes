@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
           intent.putExtra("imageSrc", RecipesAdapter.getRecipes().get(position).getImageSrc());
           intent.putExtra("header", RecipesAdapter.getRecipes().get(position).getHeader());
           intent.putExtra("content", RecipesAdapter.getRecipes().get(position).getContent());
+          intent.putExtra("href", RecipesAdapter.getRecipes().get(position).getHref());
           startActivity(intent);
         }
       }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import kve.ru.pizzarecipes.data.IngredientGroup;
 import kve.ru.pizzarecipes.data.PizzaRecipe;
 
 public class NetworkUtils {
@@ -28,6 +29,18 @@ public class NetworkUtils {
 
   public static void setOnFinishLoadingListener(OnFinishLoadingListener onFinishLoadingListener) {
     NetworkUtils.onFinishLoadingListener = onFinishLoadingListener;
+  }
+
+  public static List<IngredientGroup> getIngredients(String href) {
+    try {
+      return new LoadIngredientsTask().execute(href).get();
+    } catch (ExecutionException e) {
+      Log.e(TAG, e.getLocalizedMessage());
+    } catch (InterruptedException e) {
+      Log.e(TAG, e.getLocalizedMessage());
+      Thread.currentThread().interrupt();
+    }
+    return null;
   }
 
   public static String getCurrentRecipe(String href) {
@@ -59,6 +72,43 @@ public class NetworkUtils {
     }
   }
 
+  public static class LoadIngredientsTask extends AsyncTask<String, Void, List<IngredientGroup>> {
+
+    @Override
+    protected List<IngredientGroup> doInBackground(String... href) {
+      List<IngredientGroup> ingredients = new ArrayList<>();
+      String ref = href[0];
+      Document doc;
+      try {
+        doc = Jsoup.connect(ConstValues.WEB_SITE + ref).get();
+        Elements groupTitles =
+            doc.select(ConstValues.INGREDIENTS_CONTENT).select(ConstValues.INGREDIENTS_GROUP_TITLE);
+        Elements groupContents =
+            doc.select(ConstValues.INGREDIENTS_CONTENT).select(ConstValues.INGREDIENTS_LIST_GROUP);
+        for (int i = 0; i < groupContents.size(); i++) {
+          String title = "";
+          Elements groupItems = groupContents.get(i).select(ConstValues.INGREDIENTS_ITEMS);
+          if (groupItems == null || groupItems.isEmpty()) {
+            continue;
+          }
+          if (i > 0 && groupTitles.size() > (i - 1)) {
+            title = groupTitles.get(i - 1).text();
+          }
+          StringBuilder bld = new StringBuilder();
+          for (Element element : groupContents.get(i).select(ConstValues.INGREDIENTS_ITEMS)) {
+            bld.append("   " + element.attr("content") + "\n");
+          }
+          ingredients.add(new IngredientGroup(title, bld.toString()));
+        }
+
+      } catch (IOException e) {
+        Log.e(TAG, "LoadIngredientsTask. Error during parsing html document: " + e.getMessage());
+      }
+
+      return ingredients;
+    }
+  }
+
   public static class LoadRecipeTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... href) {
@@ -68,12 +118,14 @@ public class NetworkUtils {
         pizzaDoc = Jsoup.connect(ConstValues.WEB_SITE + ref).get();
         Elements elements = pizzaDoc.select(ConstValues.METHOD_ITEM);
         StringBuilder bld = new StringBuilder();
+        int i = 0;
         for (Element element : elements) {
-          bld.append("   " + element.text() + "\n\n");
+          bld.append(++i + ".  " + element.text() + "\n\n");
+          // i++;
         }
         return bld.toString();
       } catch (IOException e) {
-        Log.e(TAG, "Error during parsing html document: " + e.getMessage());
+        Log.e(TAG, "LoadRecipeTask. Error during parsing html document: " + e.getMessage());
       }
       return null;
     }
@@ -128,7 +180,7 @@ public class NetworkUtils {
         }
 
       } catch (IOException e) {
-        Log.e(TAG, "Error during parsing html document: " + e.getMessage());
+        Log.e(TAG, "LoadingTask. Error during parsing html document: " + e.getMessage());
       }
       setIsLoading(false);
       return recipes;
