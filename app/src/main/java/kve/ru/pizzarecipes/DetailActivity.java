@@ -17,18 +17,14 @@ import kve.ru.pizzarecipes.utils.NetworkUtils;
 
 public class DetailActivity extends AppCompatActivity {
 
-  private ScrollView scrollViewDetail;
-  private RecyclerView recyclerViewIngredients;
-  private IngredientsAdapter adapter;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_detail);
 
-    scrollViewDetail = findViewById(R.id.scrollViewDetail);
-    recyclerViewIngredients = findViewById(R.id.recyclerViewIngredients);
-    adapter = new IngredientsAdapter();
+    ScrollView scrollViewDetail = findViewById(R.id.scrollViewDetail);
+    RecyclerView recyclerViewIngredients = findViewById(R.id.recyclerViewIngredients);
+    IngredientsAdapter adapter = new IngredientsAdapter();
     recyclerViewIngredients.setAdapter(adapter);
     recyclerViewIngredients.setLayoutManager(new LinearLayoutManager(this));
 

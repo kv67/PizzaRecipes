@@ -32,15 +32,16 @@ public class NetworkUtils {
   }
 
   public static List<IngredientGroup> getIngredients(String href) {
+    List<IngredientGroup> result = new ArrayList<>();
     try {
-      return new LoadIngredientsTask().execute(href).get();
+      result = new LoadIngredientsTask().execute(href).get();
     } catch (ExecutionException e) {
       Log.e(TAG, e.getLocalizedMessage());
     } catch (InterruptedException e) {
       Log.e(TAG, e.getLocalizedMessage());
       Thread.currentThread().interrupt();
     }
-    return null;
+    return result;
   }
 
   public static String getCurrentRecipe(String href) {
@@ -121,7 +122,6 @@ public class NetworkUtils {
         int i = 0;
         for (Element element : elements) {
           bld.append(++i + ".  " + element.text() + "\n\n");
-          // i++;
         }
         return bld.toString();
       } catch (IOException e) {
