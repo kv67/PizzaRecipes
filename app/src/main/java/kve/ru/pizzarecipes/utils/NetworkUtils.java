@@ -87,7 +87,7 @@ public class NetworkUtils {
         Elements groupContents =
             doc.select(ConstValues.INGREDIENTS_CONTENT).select(ConstValues.INGREDIENTS_LIST_GROUP);
         for (int i = 0; i < groupContents.size(); i++) {
-          String title = "";
+          String title = "Ingredients:";
           Elements groupItems = groupContents.get(i).select(ConstValues.INGREDIENTS_ITEMS);
           if (groupItems == null || groupItems.isEmpty()) {
             continue;

@@ -27,6 +27,7 @@ public class DetailActivity extends AppCompatActivity {
     IngredientsAdapter adapter = new IngredientsAdapter();
     recyclerViewIngredients.setAdapter(adapter);
     recyclerViewIngredients.setLayoutManager(new LinearLayoutManager(this));
+    recyclerViewIngredients.setHasFixedSize(false);
 
     ImageView imageViewDetail = findViewById(R.id.imageViewDetail);
     TextView textViewTitle = findViewById(R.id.textViewTitle);
@@ -38,6 +39,7 @@ public class DetailActivity extends AppCompatActivity {
         Picasso.get().load(intent.getStringExtra("imageSrc")).placeholder(R.drawable.pizza).into(imageViewDetail);
       }
       if (intent.hasExtra("header")) {
+        setTitle(intent.getStringExtra("header"));
         textViewTitle.setText(intent.getStringExtra("header"));
       }
       if (intent.hasExtra("content")) {
